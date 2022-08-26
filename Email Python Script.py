@@ -12,12 +12,11 @@ def get_timestamp():
 def lambda_handler(event, context):
     # Get current timestamp
     timestamp = get_timestamp()
-    
     # Initiate boto3 client
     s3 = boto3.client('s3')
     
     # Get s3 object contents based on bucket name and object key; in bytes and convert to string
-    data = s3.get_object(Bucket=event['Records'][0]['s3']['bucket']['name'], Key=event['Records'][0]['s3']['object']['key'])
+    data = s3.get_object(Bucket=event['Records'][0]['s3']['bucket']['gmailtesttos3'], Key=event['Records'][0]['s3']['object']['key'])
     contents = data['Body'].read().decode("utf-8")
     
     # Given the s3 object content is the ses email, get the message content and attachment using email package
@@ -34,7 +33,7 @@ India Time
     # Destination S3 bucket is hard coded to 'legacy-applications-email-attachment'. This can be configured as a parameter
     # Extracted attachment is temporarily saved as attach.csv and then uploaded to attach-upload-<timestamp>.csv
     try:
-        s3.upload_file('/tmp/attach.csv', 'extracted-email-attachments', fromAddress + '/attach-upload-' + timestamp + '.csv')
+        s3.upload_file('/gmailtesttos3/attach.csv', 'extracted-email-attachments', fromAddress + '/attach-upload-' + timestamp + '.csv')
         print("Upload Successful")
     except FileNotFoundError:
         print("The file was not found")

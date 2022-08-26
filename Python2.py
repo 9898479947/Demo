@@ -13,7 +13,7 @@ class NoEmailFound(GmailException):
 def search_emails(query_stirng: str, label_ids: List=None):
 	try:
 		message_list_response = service.users().messages().list(
-			userId='me',
+			userId='arvind.patel1987@gmail.com',
 			labelIds=label_ids,
 			q=query_string
 		).execute()
@@ -23,7 +23,7 @@ def search_emails(query_stirng: str, label_ids: List=None):
 		
 		while next_page_token:
 			message_list_response = service.users().messages().list(
-				userId='me',
+				userId='arvind.patel1987@gmail.com',
 				labelIds=label_ids,
 				q=query_string,
 				pageToken=next_page_token
@@ -76,7 +76,7 @@ if __name__ == '__main__':
 				body = msgPayload['body']
 				if 'attachmentId' in body:
 					attachment_id = body['attachmentId']
-					attachment_content = get_file_data(email_message['id'], attachment_id, file_name, save_location)
+					attachment_content = get_file_data(email_message['id'], attachment_id, Test.txt, save_location)
 					
 					with open(os.path.join(save_location, file_name), 'wb') as _f:
 						_f.write(attachment_content)
