@@ -25,7 +25,6 @@ def lambda_handler(event, context):
     fromAddress = msg['from']
     regex = "\\<(.*?)\\>"
     fromAddress = re.findall(regex, fromAddress)[0]
-India Time
     # Write the attachment to a temp location
     open('/tmp/attach.csv', 'wb').write(attachment.get_payload(decode=True))
     
